@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IQ-Core | Agents</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="logo-area">
+        <div class="logo-block">
+          <div class="logo-icon">IQ</div>
+          <div class="logo-text">
+            <div class="logo-title">IQ-Core</div>
+            <div class="logo-sub">QA Analytics</div>
+          </div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a class="nav-item" href="index.html">
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item active" href="#">
+          <span>Agents</span>
+        </a>
+      </nav>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="user">
+          <div class="avatar">JM</div>
+          <div class="user-meta">
+            <div class="user-name">John Manager</div>
+            <div class="user-role">QA Supervisor</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1>Stanley | Agent Performance</h1>
+          </div>
+          <div class="actions">
+            <button class="btn ghost">Dec 10, 2025 - Dec 17, 2025</button>
+            <button class="btn ghost">Refresh</button>
+            <button class="btn ghost">Export</button>
+          </div>
+        </div>
+
+        <section class="card summary-card">
+          <div class="card-header">
+            <h2>Agent Performance Summary</h2>
+          </div>
+          <div class="summary-body">
+            <p>This view evaluates individual Stanley customer support agents based on the outcomes they deliver across Process Adherence, Issue Resolution, and Customer Satisfaction (CSAT).</p>
+            <p>Instead of static QA scores, agent performance is understood through outcome patterns that explain why customers have different experiences with similar Stanley product issues.</p>
+            <p>Over the past week, agents demonstrated strong overall process adherence, consistently following recommended troubleshooting steps for common issues like lid leaks and handle stability. However, outcomes varied based on how agents adapted these processes.</p>
+            <p>Agents who combined Standard Operating Procedure (SOP) adherence with proactive resolution actions (e.g., offering timely replacements or clearly explaining next steps) achieved higher resolution rates and stronger customer satisfaction. In contrast, calls involving repeat or wear-related Stanley product issues showed lower resolution effectiveness when agents relied solely on procedural troubleshooting without escalation.</p>
+            <p>Customer satisfaction was highest when agents clearly set expectations, confirmed resolution, and demonstrated ownership, even if immediate resolution wasn't possible. These patterns indicate clear opportunities for targeted coaching and SOP refinement to improve consistency across the team.</p>
+          </div>
+        </section>
+
+        <section class="card filter-bar">
+          <div class="filters">
+            <div class="filter-group">
+              <label for="teamFilter" class="filter-label">Team</label>
+              <select id="teamFilter" class="filter-select">
+                <option value="">All Teams</option>
+                <option value="Customer Service">Customer Service</option>
+                <option value="Escalations">Escalations</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="leaderFilter" class="filter-label">Team Leader</label>
+              <select id="leaderFilter" class="filter-select">
+                <option value="">All Leaders</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="agentFilter" class="filter-label">Agent Name</label>
+              <select id="agentFilter" class="filter-select">
+                <option value="">All Agents</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section id="chartSection" class="card chart-section" style="display: none;">
+          <h2>Agent Performance Trends</h2>
+          <div class="chart-controls">
+            <span class="time-range-label">Showing: This Week</span>
+            <div class="zoom-controls">
+              <button class="btn-small" id="zoomOutBtn">Zoom Out</button>
+              <button class="btn-small" id="zoomInBtn" disabled>Zoom In</button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="mainTrendChart"></canvas>
+          </div>
+        </section>
+
+        <div id="agentsContainer" class="agents-grid">
+          <!-- Agent cards will be rendered here -->
+        </div>
+
+        <!-- Agent Detail Modal -->
+        <div id="agentModal" class="modal" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 id="modalAgentName">Agent Name - Detailed Report</h2>
+              <div class="modal-meta">
+                <span id="modalReportDate">Report Date: Dec 10 – Dec 17</span>
+                <span id="modalCallsCount">• 18 calls analyzed</span>
+              </div>
+              <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalBody" class="modal-body">
+              <!-- Modal content will be rendered here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function() {
+      const agents = [
+        {
+          name: 'Sarah Mitchell',
+          team: 'Customer Service',
+          teamLeader: 'Ankit Mehra',
+          processAdherence: 92,
+          resolutionRate: 81,
+          positiveCSAT: 78,
+          behaviourScore: 4.3,
+          criticalFailures: 1,
+          insight: 'Sarah consistently follows Stanley SOPs and resolves most issues, but CSAT dips when calls involve repeat lid-related problems.',
+          rootCause: 'Customers calling about recurring Stanley lid leaks often say "I\'ve already tried this before". While Sarah follows SOPs precisely, she delays replacement offers, leading to frustration even when issues are eventually resolved.',
+          nextBestActions: [
+            'Coach Sarah on recognizing when to escalate to replacement after initial troubleshooting fails',
+            'Practice scenarios involving repeat Stanley lid issues to build confidence in replacement authorization'
+          ],
+          historicalComparison: 'Sarah\'s pattern of delayed replacement escalation has been consistent over the past 6 months. Her strong SOP adherence remains a strength, but this recurring gap limits resolution effectiveness. This week\'s CSAT dip aligns with historical patterns when replacement delays occur.'
+        },
+        {
+          name: 'Daniel Reyes',
+          team: 'Customer Service',
+          teamLeader: 'Ankit Mehra',
+          processAdherence: 68,
+          resolutionRate: 85,
+          positiveCSAT: 88,
+          behaviourScore: 3.8,
+          criticalFailures: 2,
+          insight: 'Daniel achieves strong outcomes by prioritizing fast resolution over strict process adherence.',
+          rootCause: 'Daniel frequently skips diagnostics and proactively offers replacement lids or handles for known Stanley issues. Customers respond positively with comments like "That was much easier than expected", though SOP adherence is low.',
+          nextBestActions: [
+            'Review when diagnostic steps are essential vs. when proactive replacement is appropriate',
+            'Document Daniel\'s successful resolution patterns to inform SOP updates'
+          ],
+          historicalComparison: 'Daniel\'s high-resolution, low-adherence pattern has been stable for 3 months. His approach works well for experienced Stanley customers but may miss underlying issues with first-time users. This week shows continued strong CSAT despite adherence gaps.'
+        },
+        {
+          name: 'Priya Nair',
+          team: 'Customer Service',
+          teamLeader: 'Ankit Mehra',
+          processAdherence: 90,
+          resolutionRate: 72,
+          positiveCSAT: 82,
+          behaviourScore: 4.1,
+          criticalFailures: 1,
+          insight: 'Priya maintains customer trust even when immediate resolution is not possible.',
+          rootCause: 'Priya clearly explains Stanley product limitations and replacement timelines. Customers often say "Thanks for explaining how replacements work", resulting in positive CSAT despite unresolved calls.',
+          nextBestActions: [
+            'Identify opportunities to improve resolution rate while maintaining strong communication',
+            'Share Priya\'s expectation-setting techniques with the team'
+          ],
+          historicalComparison: 'Priya\'s strength in maintaining trust despite unresolved calls has been consistent for 12 months. Her resolution rate has improved slightly over the past quarter, suggesting coaching on escalation timing is having an effect.'
+        },
+        {
+          name: 'James O\'Connor',
+          team: 'Customer Service',
+          teamLeader: 'Rachel Lawson',
+          processAdherence: 75,
+          resolutionRate: 70,
+          positiveCSAT: 65,
+          behaviourScore: 3.1,
+          criticalFailures: 4,
+          insight: 'James struggles with complex Stanley product issues that require deeper diagnostics.',
+          rootCause: 'Calls involving handle instability or seal wear often remain unresolved. Customers express confusion with statements like "I\'m not sure what to try next", indicating missed explanations and incomplete guidance.',
+          nextBestActions: [
+            'Provide targeted training on Stanley handle and seal diagnostic procedures',
+            'Pair James with a mentor for complex issue resolution scenarios'
+          ],
+          historicalComparison: 'James has shown improvement in process adherence over the past 6 months (from 65% to 75%), but resolution and CSAT remain challenges. This week\'s pattern matches historical trends, indicating need for continued coaching on complex diagnostics.'
+        },
+        {
+          name: 'Aisha Khan',
+          team: 'Customer Service',
+          teamLeader: 'Rachel Lawson',
+          processAdherence: 88,
+          resolutionRate: 79,
+          positiveCSAT: 91,
+          behaviourScore: 4.7,
+          criticalFailures: 0,
+          insight: 'Aisha delivers consistently positive customer experiences across most Stanley product issues.',
+          rootCause: 'Aisha balances SOP adherence with reassurance and confirmation. Customers frequently say "That makes sense now" and "I feel confident using it again", reflecting strong trust-building behavior.',
+          nextBestActions: [
+            'Document Aisha\'s best practices for team-wide adoption',
+            'Consider Aisha as a peer mentor for newer agents'
+          ],
+          historicalComparison: 'Aisha has maintained consistently strong performance across all metrics for 12+ months. Her CSAT has improved from 85% to 91% over the past quarter, demonstrating continued growth. This week\'s performance aligns with her established excellence.'
+        },
+        {
+          name: 'Mark Thompson',
+          team: 'Escalations',
+          teamLeader: 'Ankit Mehra',
+          processAdherence: 82,
+          resolutionRate: 68,
+          positiveCSAT: 60,
+          behaviourScore: 2.9,
+          criticalFailures: 5,
+          insight: 'Mark resolves fewer issues and struggles to manage customer expectations.',
+          rootCause: 'Customers often ask "Will this happen again?" or "When should I call back?". Mark resolves issues inconsistently and does not clearly explain long-term reliability of Stanley products, impacting CSAT.',
+          nextBestActions: [
+            'Focus on expectation-setting and long-term product reliability communication',
+            'Practice resolution confirmation techniques to improve customer confidence'
+          ],
+          historicalComparison: 'Mark\'s CSAT has declined from 68% to 60% over the past 6 months, while resolution rate has remained consistently low. This week\'s performance reflects a recurring pattern of expectation management gaps. New coaching focus needed.'
+        },
+        {
+          name: 'Neha Sharma',
+          team: 'Escalations',
+          teamLeader: 'Ankit Mehra',
+          processAdherence: 95,
+          resolutionRate: 74,
+          positiveCSAT: 76,
+          behaviourScore: 3.6,
+          criticalFailures: 2,
+          insight: 'Neha is highly compliant but less outcome-driven in recurring issue scenarios.',
+          rootCause: 'Neha strictly follows SOPs even when customers describe repeated Stanley lid failures. Lack of escalation to replacement results in unresolved outcomes despite high adherence.',
+          nextBestActions: [
+            'Train Neha on when to escalate beyond standard SOPs for recurring issues',
+            'Build confidence in replacement authorization decisions'
+          ],
+          historicalComparison: 'Neha\'s high adherence (95%) has been consistent for 12+ months, but resolution rate has plateaued at 74%. This week shows the same pattern: strong process compliance without outcome optimization. This is a recurring gap requiring different coaching approach.'
+        },
+        {
+          name: 'Luis Fernandez',
+          team: 'Escalations',
+          teamLeader: 'Rachel Lawson',
+          processAdherence: 64,
+          resolutionRate: 80,
+          positiveCSAT: 84,
+          behaviourScore: 3.7,
+          criticalFailures: 2,
+          insight: 'Luis performs well with experienced Stanley customers but less so with first-time users.',
+          rootCause: 'Luis assumes product familiarity and skips foundational explanations. New customers say "I didn\'t know it was supposed to work that way", affecting clarity but not always resolution.',
+          nextBestActions: [
+            'Develop a checklist for identifying first-time Stanley customers',
+            'Practice foundational product explanations for new users'
+          ],
+          historicalComparison: 'Luis\'s resolution rate has improved from 72% to 80% over the past 6 months, but adherence remains low. This week\'s pattern matches historical trends: strong outcomes with experienced customers, gaps with new users. Consistent strength and gap identified.'
+        },
+        {
+          name: 'Emily Carter',
+          team: 'Escalations',
+          teamLeader: 'Rachel Lawson',
+          processAdherence: 86,
+          resolutionRate: 83,
+          positiveCSAT: 89,
+          behaviourScore: 4.6,
+          criticalFailures: 0,
+          insight: 'Emily excels at turning potentially negative Stanley experiences into positive ones.',
+          rootCause: 'Emily proactively confirms resolution and sets expectations. Customers say "I feel much better about this now", indicating strong closure and reassurance behaviors.',
+          nextBestActions: [
+            'Share Emily\'s closure techniques with the team',
+            'Consider Emily for advanced coaching or leadership development'
+          ],
+          historicalComparison: 'Emily has shown consistent improvement across all metrics over the past 12 months. Her CSAT has increased from 82% to 89%, and resolution rate from 78% to 83%. This week\'s performance reflects her established excellence and continued growth trajectory.'
+        },
+        {
+          name: 'Rahul Verma',
+          team: 'Escalations',
+          teamLeader: 'Rachel Lawson',
+          processAdherence: 71,
+          resolutionRate: 66,
+          positiveCSAT: 58,
+          behaviourScore: 2.8,
+          criticalFailures: 6,
+          insight: 'Rahul shows inconsistent outcomes across similar Stanley issues.',
+          rootCause: 'Rahul alternates between strict SOP use and ad-hoc fixes. Customers experience variability, often saying "Last time I was told something different", reducing confidence and satisfaction.',
+          nextBestActions: [
+            'Establish consistent troubleshooting approach through structured coaching',
+            'Create personalized SOP checklist for Rahul to follow consistently'
+          ],
+          historicalComparison: 'Rahul\'s inconsistency has been a recurring pattern for 12+ months. His metrics fluctuate significantly week-to-week, making it difficult to identify stable strengths or gaps. This week\'s performance is consistent with historical variability. New structured coaching approach needed.'
+        }
+      ];
+
+      // Generate historical data for charts
+      function generateHistoricalData(agent, timeRange) {
+        const baseValues = {
+          processAdherence: agent.processAdherence,
+          resolutionRate: agent.resolutionRate,
+          positiveCSAT: agent.positiveCSAT
+        };
+
+        const ranges = {
+          'thisWeek': { points: 7, variance: 3 },
+          '3Months': { points: 12, variance: 8 },
+          '6Months': { points: 24, variance: 10 },
+          '12Months': { points: 12, variance: 12 },
+          '24Months': { points: 24, variance: 15 }
+        };
+
+        const config = ranges[timeRange] || ranges['thisWeek'];
+        const data = { processAdherence: [], resolutionRate: [], positiveCSAT: [], labels: [] };
+
+        // Helper to format dates
+        function formatDate(date) {
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          return `${months[date.getMonth()]} ${date.getDate()}`;
+        }
+
+        function formatMonthYear(date) {
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          return `${months[date.getMonth()]} ${date.getFullYear()}`;
+        }
+
+        // Start from Dec 10, 2025 (current week)
+        const startDate = new Date(2025, 11, 10); // Month is 0-indexed, so 11 = December
+
+        for (let i = 0; i < config.points; i++) {
+          const variance = () => (Math.random() - 0.5) * config.variance;
+          data.processAdherence.push(Math.max(0, Math.min(100, baseValues.processAdherence + variance())));
+          data.resolutionRate.push(Math.max(0, Math.min(100, baseValues.resolutionRate + variance())));
+          data.positiveCSAT.push(Math.max(0, Math.min(100, baseValues.positiveCSAT + variance())));
+          
+          let labelDate = new Date(startDate);
+          
+          if (timeRange === 'thisWeek') {
+            labelDate.setDate(startDate.getDate() + i);
+            data.labels.push(formatDate(labelDate));
+          } else if (timeRange === '3Months' || timeRange === '6Months') {
+            // Go back in time: 3 months = 12 weeks, 6 months = 24 weeks
+            const weeksBack = config.points - i - 1;
+            labelDate.setDate(startDate.getDate() - (weeksBack * 7));
+            data.labels.push(formatDate(labelDate));
+          } else if (timeRange === '12Months' || timeRange === '24Months') {
+            // Go back in time by months
+            const monthsBack = config.points - i - 1;
+            labelDate.setMonth(startDate.getMonth() - monthsBack);
+            data.labels.push(formatMonthYear(labelDate));
+          }
+        }
+
+        // Reverse labels so they go chronologically
+        data.labels.reverse();
+        data.processAdherence.reverse();
+        data.resolutionRate.reverse();
+        data.positiveCSAT.reverse();
+
+        return data;
+      }
+
+      // Filter state
+      let filters = {
+        team: '',
+        teamLeader: '',
+        agent: ''
+      };
+
+      let selectedAgentForChart = null;
+      let chartTimeRange = 'thisWeek';
+      const timeRangeLabels = {
+        'thisWeek': 'This Week',
+        '3Months': 'Last 3 Months',
+        '6Months': 'Last 6 Months',
+        '12Months': 'Last 12 Months',
+        '24Months': 'Last 24 Months'
+      };
+      let mainChart = null;
+
+      // Update filter dropdowns
+      function updateFilters() {
+        const teamFilter = document.getElementById('teamFilter');
+        const leaderFilter = document.getElementById('leaderFilter');
+        const agentFilter = document.getElementById('agentFilter');
+
+        // Update team leaders based on team
+        const teams = [...new Set(agents.map(a => a.team))];
+        const filteredByTeam = filters.team ? agents.filter(a => a.team === filters.team) : agents;
+        const leaders = [...new Set(filteredByTeam.map(a => a.teamLeader))];
+
+        leaderFilter.innerHTML = '<option value="">All Leaders</option>';
+        leaders.forEach(leader => {
+          const option = document.createElement('option');
+          option.value = leader;
+          option.textContent = leader;
+          if (filters.teamLeader === leader) option.selected = true;
+          leaderFilter.appendChild(option);
+        });
+
+        // Update agents based on team and leader
+        let filteredAgents = agents;
+        if (filters.team) filteredAgents = filteredAgents.filter(a => a.team === filters.team);
+        if (filters.teamLeader) filteredAgents = filteredAgents.filter(a => a.teamLeader === filters.teamLeader);
+
+        agentFilter.innerHTML = '<option value="">All Agents</option>';
+        filteredAgents.forEach(agent => {
+          const option = document.createElement('option');
+          option.value = agent.name;
+          option.textContent = agent.name;
+          if (filters.agent === agent.name) option.selected = true;
+          agentFilter.appendChild(option);
+        });
+
+        renderAgents();
+      }
+
+      // Filter agents
+      function getFilteredAgents() {
+        let filtered = agents;
+        if (filters.team) filtered = filtered.filter(a => a.team === filters.team);
+        if (filters.teamLeader) filtered = filtered.filter(a => a.teamLeader === filters.teamLeader);
+        if (filters.agent) filtered = filtered.filter(a => a.name === filters.agent);
+        return filtered;
+      }
+
+      // Render agent cards
+      function renderAgents() {
+        const container = document.getElementById('agentsContainer');
+        const filtered = getFilteredAgents();
+
+        container.innerHTML = filtered.map((agent, index) => {
+          return `
+            <article class="card agent-card" onclick="openAgentModal(${index})">
+              <div class="agent-top-badge">
+                <span class="agent-badge-icon">🚩</span>
+                <span class="agent-badge-text">Critical Failures</span>
+                <span class="agent-badge-count">${agent.criticalFailures}</span>
+              </div>
+              <div class="agent-header">
+                <div>
+                  <h3>${agent.name}</h3>
+                  <div class="agent-meta">
+                    <span class="agent-team">${agent.team}</span>
+                    <span class="agent-separator">•</span>
+                    <span class="agent-leader">${agent.teamLeader}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="performance-overview">
+                <h4 class="overview-title">PERFORMANCE OVERVIEW</h4>
+                <div class="overview-metrics">
+                  <div class="overview-metric">
+                    <div class="metric-header">
+                      <span class="metric-name">Process Adherence</span>
+                      <span class="metric-badge">${agent.processAdherence}%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill process" style="width: ${agent.processAdherence}%"></div>
+                    </div>
+                  </div>
+                  <div class="overview-metric">
+                    <div class="metric-header">
+                      <span class="metric-name">Resolution Rate</span>
+                      <span class="metric-badge">${agent.resolutionRate}%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill resolution" style="width: ${agent.resolutionRate}%"></div>
+                    </div>
+                  </div>
+                  <div class="overview-metric">
+                    <div class="metric-header">
+                      <span class="metric-name">Positive CSAT</span>
+                      <span class="metric-badge">${agent.positiveCSAT}%</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill csat" style="width: ${agent.positiveCSAT}%"></div>
+                    </div>
+                  </div>
+                  <div class="overview-metric">
+                    <div class="metric-header">
+                      <span class="metric-name">Agent Behaviour Score</span>
+                      <span class="metric-badge">${agent.behaviourScore.toFixed(1)}/5</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill behaviour" style="width: ${(agent.behaviourScore / 5) * 100}%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        // Show/hide chart section based on filters
+        const chartSection = document.getElementById('chartSection');
+        if (filtered.length > 0) {
+          chartSection.style.display = 'block';
+          updateMainChart();
+        } else {
+          chartSection.style.display = 'none';
+        }
+      }
+
+      // Open agent modal
+      window.openAgentModal = function(agentIndex) {
+        const filtered = getFilteredAgents();
+        const agent = filtered[agentIndex];
+        if (!agent) return;
+
+        const modal = document.getElementById('agentModal');
+        const modalBody = document.getElementById('modalBody');
+        const modalAgentName = document.getElementById('modalAgentName');
+        const modalReportDate = document.getElementById('modalReportDate');
+        const modalCallsCount = document.getElementById('modalCallsCount');
+
+        modalAgentName.textContent = `${agent.name} - Detailed Report`;
+        modalReportDate.textContent = 'Report Date: Dec 10 – Dec 17';
+        modalCallsCount.textContent = '• 18 calls analyzed';
+
+        modalBody.innerHTML = `
+          <div class="modal-kpis">
+            <div class="modal-kpi">
+              <div class="modal-kpi-label">Process Adherence</div>
+              <div class="modal-kpi-value">${agent.processAdherence}%</div>
+            </div>
+            <div class="modal-kpi">
+              <div class="modal-kpi-label">Resolution Rate</div>
+              <div class="modal-kpi-value">${agent.resolutionRate}%</div>
+            </div>
+            <div class="modal-kpi">
+              <div class="modal-kpi-label">Positive CSAT</div>
+              <div class="modal-kpi-value">${agent.positiveCSAT}%</div>
+            </div>
+            <div class="modal-kpi">
+              <div class="modal-kpi-label">Behaviour Score</div>
+              <div class="modal-kpi-value">${agent.behaviourScore.toFixed(1)}</div>
+            </div>
+            <div class="modal-kpi">
+              <div class="modal-kpi-label">Critical Failures</div>
+              <div class="modal-kpi-value">${agent.criticalFailures}</div>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h4>This Week's Agent Insights (Dec 10 – Dec 17)</h4>
+            <div class="insight-block">
+              <p class="block-title">Insight</p>
+              <p>${agent.insight}</p>
+            </div>
+            <div class="insight-block">
+              <p class="block-title">Root Cause</p>
+              <p>${agent.rootCause}</p>
+            </div>
+            <div class="insight-block">
+              <p class="block-title">Next Best Actions</p>
+              <ul>
+                ${agent.nextBestActions.map(action => `<li>${action}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h4>Feedback vs Historical Patterns</h4>
+            <div class="insight-block">
+              <p>${agent.historicalComparison}</p>
+            </div>
+          </div>
+        `;
+
+        modal.style.display = 'flex';
+        selectedAgentForChart = agent;
+        updateMainChart();
+      };
+
+      // Close modal
+      window.closeModal = function() {
+        const modal = document.getElementById('agentModal');
+        modal.style.display = 'none';
+        selectedAgentForChart = null;
+        updateMainChart();
+      };
+
+      // Update main chart
+      function updateMainChart() {
+        const canvas = document.getElementById('mainTrendChart');
+        if (!canvas) return;
+
+        const filtered = getFilteredAgents();
+        const agentToChart = selectedAgentForChart || (filtered.length === 1 ? filtered[0] : null);
+        
+        if (!agentToChart) {
+          // Show aggregated data for all filtered agents
+          const avgData = {
+            processAdherence: Math.round(filtered.reduce((sum, a) => sum + a.processAdherence, 0) / filtered.length),
+            resolutionRate: Math.round(filtered.reduce((sum, a) => sum + a.resolutionRate, 0) / filtered.length),
+            positiveCSAT: Math.round(filtered.reduce((sum, a) => sum + a.positiveCSAT, 0) / filtered.length)
+          };
+          renderMainChart(avgData, filtered.length > 1 ? 'All Filtered Agents' : '');
+        } else {
+          renderMainChart(agentToChart, agentToChart.name);
+        }
+      }
+
+      // Render main chart
+      function renderMainChart(agent, label) {
+        const canvas = document.getElementById('mainTrendChart');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        const data = generateHistoricalData(agent, chartTimeRange);
+
+        if (mainChart) {
+          mainChart.destroy();
+        }
+
+        mainChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: data.labels,
+            datasets: [
+              {
+                label: 'Process Adherence',
+                data: data.processAdherence,
+                borderColor: '#2563eb',
+                backgroundColor: 'rgba(37,99,235,0.1)',
+                tension: 0.4
+              },
+              {
+                label: 'Resolution Rate',
+                data: data.resolutionRate,
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16,185,129,0.1)',
+                tension: 0.4
+              },
+              {
+                label: 'CSAT',
+                data: data.positiveCSAT,
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245,158,11,0.1)',
+                tension: 0.4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: 'bottom'
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                min: 50,
+                max: 100
+              }
+            }
+          }
+        });
+      }
+
+      // Zoom controls
+      document.getElementById('zoomOutBtn').addEventListener('click', () => {
+        const ranges = ['thisWeek', '3Months', '6Months', '12Months', '24Months'];
+        const currentIndex = ranges.indexOf(chartTimeRange);
+        if (currentIndex < ranges.length - 1) {
+          chartTimeRange = ranges[currentIndex + 1];
+          document.querySelector('.time-range-label').textContent = `Showing: ${timeRangeLabels[chartTimeRange]}`;
+          document.getElementById('zoomInBtn').disabled = false;
+          if (chartTimeRange === '24Months') {
+            document.getElementById('zoomOutBtn').disabled = true;
+          }
+          updateMainChart();
+        }
+      });
+
+      document.getElementById('zoomInBtn').addEventListener('click', () => {
+        const ranges = ['thisWeek', '3Months', '6Months', '12Months', '24Months'];
+        const currentIndex = ranges.indexOf(chartTimeRange);
+        if (currentIndex > 0) {
+          chartTimeRange = ranges[currentIndex - 1];
+          document.querySelector('.time-range-label').textContent = `Showing: ${timeRangeLabels[chartTimeRange]}`;
+          document.getElementById('zoomOutBtn').disabled = false;
+          if (chartTimeRange === 'thisWeek') {
+            document.getElementById('zoomInBtn').disabled = true;
+          }
+          updateMainChart();
+        }
+      });
+
+      // Filter event listeners
+      document.getElementById('teamFilter').addEventListener('change', (e) => {
+        filters.team = e.target.value;
+        filters.teamLeader = '';
+        filters.agent = '';
+        selectedAgentForChart = null;
+        updateFilters();
+      });
+
+      document.getElementById('leaderFilter').addEventListener('change', (e) => {
+        filters.teamLeader = e.target.value;
+        filters.agent = '';
+        selectedAgentForChart = null;
+        updateFilters();
+      });
+
+      document.getElementById('agentFilter').addEventListener('change', (e) => {
+        filters.agent = e.target.value;
+        selectedAgentForChart = null;
+        renderAgents();
+      });
+
+      // Close modal when clicking outside
+      document.getElementById('agentModal').addEventListener('click', (e) => {
+        if (e.target.id === 'agentModal') {
+          closeModal();
+        }
+      });
+
+      // Initial render
+      updateFilters();
+    })();
+  </script>
+</body>
+</html>
+

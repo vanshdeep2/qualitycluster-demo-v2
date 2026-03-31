@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IQ-Core | QA Analytics Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="logo-area">
+        <div class="logo-block">
+          <div class="logo-icon">IQ</div>
+          <div class="logo-text">
+            <div class="logo-title">IQ-Core</div>
+            <div class="logo-sub">QA Analytics</div>
+          </div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a class="nav-item active" href="#">
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" href="agents.html">
+          <span>Agents</span>
+        </a>
+      </nav>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="user">
+          <div class="avatar">JM</div>
+          <div class="user-meta">
+            <div class="user-name">John Manager</div>
+            <div class="user-role">QA Supervisor</div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-header">
+          <div>
+            <h1>Stanley | Weekly Call Quality Insights</h1>
+          </div>
+          <div class="actions">
+            <button class="btn ghost">Dec 10, 2025 - Dec 17, 2025</button>
+            <button class="btn ghost">Refresh</button>
+            <button class="btn ghost">Export</button>
+          </div>
+        </div>
+
+        <section class="card summary-card">
+          <div class="card-header">
+            <h2>Campaign Summary</h2>
+          </div>
+          <div class="summary-body">
+            <p>Over the past week, Stanley’s customer support calls showed strong opportunities to improve both customer experience and operational efficiency. Calls where agents closely followed Stanley’s recommended troubleshooting processes led to significantly higher resolution rates and reduced repeat contacts.</p>
+            <p>The analysis also revealed that proactive resolution actions—such as offering replacement lids or parts during the first interaction—had a meaningful impact on lowering repeat calls and improving customer confidence.</p>
+            <p>From a customer satisfaction perspective, clarity and personalization emerged as key drivers. Customers responded more positively when agents demonstrated clear product context (specific Stanley products owned) and set clear expectations around next steps and delivery timelines.</p>
+            <p>Overall, this week’s insights indicate that tighter process adherence and more decisive resolution behaviors directly translate into better customer outcomes for Stanley.</p>
+          </div>
+        </section>
+
+        <section class="card insights-section">
+          <h2>CSAT × Outcome Diagnostic Matrix</h2>
+          <div class="matrix-controls">
+            <div class="segment-toggle" role="tablist" aria-label="Behaviour segments">
+              <button class="segment-btn active" data-segment="good">Good Agent Behaviour (4-5)</button>
+              <button class="segment-btn" data-segment="poor">Poor Agent Behaviour (1-3)</button>
+            </div>
+            <p id="behaviourSubtitle" class="matrix-subtitle">Calls where agent behaviour scored 4-5.</p>
+          </div>
+          
+          <div class="matrix-container">
+            <div class="matrix-table">
+              <div class="matrix-header">
+                <div class="matrix-cell header-cell"></div>
+                <div class="matrix-cell header-cell header-positive">Positive CSAT<br><span class="header-sub">(8-10)</span></div>
+                <div class="matrix-cell header-cell header-neutral">Neutral CSAT<br><span class="header-sub">(5-7)</span></div>
+                <div class="matrix-cell header-cell header-negative">Negative CSAT<br><span class="header-sub">(&lt;5)</span></div>
+              </div>
+              <div class="matrix-row">
+                <div class="matrix-cell row-label" data-resolution="achieved" data-process="followed"></div>
+                <div class="matrix-cell" data-csat="positive" data-resolution="achieved" data-process="followed">
+                  <span class="cell-percentage" id="cell-1">18%</span>
+                </div>
+                <div class="matrix-cell" data-csat="neutral" data-resolution="achieved" data-process="followed">
+                  <span class="cell-percentage" id="cell-2">8%</span>
+                </div>
+                <div class="matrix-cell" data-csat="negative" data-resolution="achieved" data-process="followed">
+                  <span class="cell-percentage" id="cell-3">5%</span>
+                </div>
+              </div>
+              <div class="matrix-row">
+                <div class="matrix-cell row-label" data-resolution="not_achieved" data-process="followed"></div>
+                <div class="matrix-cell" data-csat="positive" data-resolution="not_achieved" data-process="followed">
+                  <span class="cell-percentage" id="cell-4">6%</span>
+                </div>
+                <div class="matrix-cell" data-csat="neutral" data-resolution="not_achieved" data-process="followed">
+                  <span class="cell-percentage" id="cell-5">7%</span>
+                </div>
+                <div class="matrix-cell" data-csat="negative" data-resolution="not_achieved" data-process="followed">
+                  <span class="cell-percentage" id="cell-6">12%</span>
+                </div>
+              </div>
+              <div class="matrix-row">
+                <div class="matrix-cell row-label" data-resolution="achieved" data-process="not_followed"></div>
+                <div class="matrix-cell" data-csat="positive" data-resolution="achieved" data-process="not_followed">
+                  <span class="cell-percentage" id="cell-7">15%</span>
+                </div>
+                <div class="matrix-cell" data-csat="neutral" data-resolution="achieved" data-process="not_followed">
+                  <span class="cell-percentage" id="cell-8">6%</span>
+                </div>
+                <div class="matrix-cell" data-csat="negative" data-resolution="achieved" data-process="not_followed">
+                  <span class="cell-percentage" id="cell-9">4%</span>
+                </div>
+              </div>
+              <div class="matrix-row">
+                <div class="matrix-cell row-label" data-resolution="not_achieved" data-process="not_followed"></div>
+                <div class="matrix-cell" data-csat="positive" data-resolution="not_achieved" data-process="not_followed">
+                  <span class="cell-percentage" id="cell-10">2%</span>
+                </div>
+                <div class="matrix-cell" data-csat="neutral" data-resolution="not_achieved" data-process="not_followed">
+                  <span class="cell-percentage" id="cell-11">3%</span>
+                </div>
+                <div class="matrix-cell" data-csat="negative" data-resolution="not_achieved" data-process="not_followed">
+                  <span class="cell-percentage" id="cell-12">14%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Matrix Stats Modal -->
+        <div id="diagnosticModal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 id="modalTitle">Matrix Cell Details</h2>
+              <button class="modal-close" id="closeDiagnosticModal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div id="diagnosticSection" class="diagnostic-content">
+                <!-- Stats content will be rendered here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="stats">
+          <div class="stat-card">
+            <p class="stat-label">Process Adherence Rate</p>
+            <p class="stat-value">25% <span class="arrow up">▲</span></p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Call Resolution Rate</p>
+            <p class="stat-value">35% <span class="arrow down">▼</span></p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">CSAT Score</p>
+            <p class="stat-value">20% <span class="arrow down">▼</span></p>
+          </div>
+          <div class="stat-card clickable-stat" id="criticalFailuresCard">
+            <p class="stat-label">🚩 Critical Failures</p>
+            <p id="criticalFailuresCount" class="stat-value">0</p>
+          </div>
+        </section>
+
+        <div id="criticalFailureModal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Critical Failure Layer</h2>
+              <button class="modal-close" id="closeCriticalFailureModal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="diagnostic-content">
+                <div class="diagnostic-question">
+                  <h4>Summary</h4>
+                  <div class="insight-block">
+                    <p id="criticalFailureSummaryText"></p>
+                    <p class="block-title">Key Drivers</p>
+                    <ul id="criticalFailureDrivers"></ul>
+                  </div>
+                </div>
+                <div class="diagnostic-question">
+                  <h4>Category Breakdown</h4>
+                  <div class="insight-block">
+                    <ul id="criticalCategoryBreakdown" class="compact-list"></ul>
+                  </div>
+                </div>
+                <div class="diagnostic-question">
+                  <h4>Critical Failure Evidence</h4>
+                  <div class="insight-block">
+                    <div class="critical-evidence-wrap">
+                      <table class="critical-table">
+                        <thead>
+                          <tr>
+                            <th>Severity</th>
+                            <th>Category</th>
+                            <th>Call ID</th>
+                            <th>Timestamp</th>
+                            <th>Speaker</th>
+                            <th>Verbatim</th>
+                          </tr>
+                        </thead>
+                        <tbody id="criticalEvidenceRows"></tbody>
+                      </table>
+                    </div>
+                    <button id="toggleCriticalEvidenceBtn" class="btn ghost" style="margin-top:10px;">Show all critical failures</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="card chart-section">
+          <h2>Performance Trends</h2>
+          <div class="chart-shell">
+            <canvas id="trendChartCanvas" class="chart"></canvas>
+            <div class="chart-legend">
+              <span><span class="dot blue"></span>Process Adherence Rate</span>
+              <span><span class="dot green"></span>Call Resolution Rate</span>
+              <span><span class="dot yellow"></span>CSAT Score</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card insights-section">
+          <h2>Process Adherence Insights</h2>
+          <div class="insight-grid">
+            <article class="insight-card">
+              <h3>SOP adherence in lid-related calls improves resolution</h3>
+              <p class="insight-text">Calls where agents followed the recommended lid troubleshooting SOP saw a 25% higher resolution rate compared to calls where steps were skipped.</p>
+              <div class="insight-block">
+                <p class="block-title">Root Cause</p>
+                <p>Analysis of call transcripts shows that customers frequently expressed confusion around lid alignment, sealing pressure, or locking mechanisms on Stanley bottles when agents skipped intermediate diagnostic steps. Phrases such as “I’m not sure if the lid is supposed to click like this” or “It still feels loose even after tightening” appeared repeatedly in unresolved calls. When agents walked customers through the full SOP—including visual checks and confirmation steps—customers demonstrated clearer understanding and confidence, leading to faster and more durable resolutions.</p>
+              </div>
+              <div class="insight-block">
+                <p class="block-title">Next Best Actions</p>
+                <ul>
+                  <li>Reinforce lid SOP adherence in agent training</li>
+                  <li>Introduce a step-by-step checklist within the agent workflow</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="insight-card">
+              <h3>Missing resolution confirmation negatively impacts CSAT</h3>
+              <p class="insight-text">Calls without a clear confirmation step at the end showed a 15% drop in CSAT.</p>
+              <div class="insight-block">
+                <p class="block-title">Root Cause</p>
+                <p>In calls lacking a structured wrap-up, customers often sought reassurance that the issue with their Stanley mug or lid was fully resolved. Statements like “So this shouldn’t happen again, right?” or “I just want to be sure this fixes it” appeared frequently. Without an explicit confirmation, customers left the call uncertain, which translated into lower satisfaction even when the technical solution was correct.</p>
+              </div>
+              <div class="insight-block">
+                <p class="block-title">Next Best Actions</p>
+                <ul>
+                  <li>Enforce a mandatory resolution confirmation step</li>
+                  <li>Add automated prompts before call closure</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="card insights-section">
+          <h2>Resolution Insights</h2>
+          <div class="insight-grid">
+            <article class="insight-card">
+              <h3>Structured handle troubleshooting reduces resolution time</h3>
+              <p class="insight-text">Following the Stanley handle-specific troubleshooting flow reduced average resolution time by 35%.</p>
+              <div class="insight-block">
+                <p class="block-title">Root Cause</p>
+                <p>Customers calling about loose or unstable handles often described symptoms inconsistently, using phrases like “It wobbles when I lift it” or “It doesn’t feel secure when full”. Agents who deviated from the structured diagnostic flow tended to focus on surface fixes, missing underlying attachment or tightening issues. In contrast, agents who followed the full handle SOP were able to identify the root mechanical issue earlier, shortening call duration and avoiding repeat explanations.</p>
+              </div>
+              <div class="insight-block">
+                <p class="block-title">Next Best Actions</p>
+                <ul>
+                  <li>Provide a digital handle troubleshooting flowchart</li>
+                  <li>Embed guided diagnostics into the agent interface</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="insight-card">
+              <h3>Proactive replacement offers reduce repeat calls</h3>
+              <p class="insight-text">Offering replacement lids or parts during the first interaction reduced repeat calls by 50%.</p>
+              <div class="insight-block">
+                <p class="block-title">Root Cause</p>
+                <p>Customers expressed strong relief and confidence when agents proactively offered replacements, often saying things like “That’s a huge relief, I was worried I’d have to keep calling” or “I’m glad you’re just sending a new lid.” In contrast, calls that ended with monitoring advice or deferred actions frequently resulted in customers calling back after continued issues, even if the initial guidance was technically correct.</p>
+              </div>
+              <div class="insight-block">
+                <p class="block-title">Next Best Actions</p>
+                <ul>
+                  <li>Empower agents to authorize replacements instantly</li>
+                  <li>Auto-flag replacement-eligible issues</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="card insights-section">
+          <h2>CSAT Insights</h2>
+          <div class="insight-grid">
+            <article class="insight-card">
+              <h3>Personalized support improves customer satisfaction</h3>
+              <p class="insight-text">CSAT improved by 18% when agents tailored solutions using the customer’s Stanley purchase history.</p>
+              <div class="insight-block">
+                <p class="block-title">Root Cause</p>
+                <p>Customers responded more positively when agents demonstrated awareness of the exact Stanley product being used (e.g., specific bottle size or lid type). Statements such as “Oh yes, it’s the 40oz Quencher” or “That makes sense for this model” signaled alignment and trust. Calls lacking this context often involved repeated clarification and frustration, lowering perceived service quality.</p>
+              </div>
+              <div class="insight-block">
+                <p class="block-title">Next Best Actions</p>
+                <ul>
+                  <li>Integrate CRM purchase history into agent view</li>
+                  <li>Prompt agents with product-specific guidance</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="insight-card">
+              <h3>Clear delivery timelines increase CSAT</h3>
+              <p class="insight-text">CSAT improved by 12% when agents provided a clear timeline for replacement delivery.</p>
+              <div class="insight-block">
+                <p class="block-title">Root Cause</p>
+                <p>Uncertainty around delivery timing was a recurring source of dissatisfaction. Customers frequently asked “When exactly should I expect it?” or “Will it arrive before my trip?”. Calls where agents could confidently communicate delivery windows showed higher satisfaction and fewer follow-up contacts compared to vague or non-committal responses.</p>
+              </div>
+              <div class="insight-block">
+                <p class="block-title">Next Best Actions</p>
+                <ul>
+                  <li>Provide real-time shipping ETA visibility</li>
+                  <li>Auto-suggest delivery timelines during calls</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    (function () {
+      const dates = ['Jul 8','Jul 10','Jul 12','Jul 14','Jul 16','Jul 18','Jul 20','Jul 22','Jul 24','Jul 26','Jul 28','Jul 30','Aug 1','Aug 5'];
+      const adherence = [82, 82, 81, 84, 79, 80, 82, 83, 83, 84, 85, 84, 85, 86];
+      const resolution = [63, 62, 63, 64, 62, 61, 62, 63, 62, 63, 64, 63, 64, 65];
+      const csat = [34, 36, 33, 32, 34, 30, 31, 32, 35, 33, 36, 34, 36, 35];
+
+      const ctx = document.getElementById('trendChartCanvas');
+      if (!ctx || typeof Chart === 'undefined') return;
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: [
+            {
+              label: 'Process Adherence Rate',
+              data: adherence,
+              borderColor: '#2563eb',
+              backgroundColor: 'rgba(37,99,235,0.15)',
+              tension: 0.35,
+              pointRadius: 4,
+              pointHoverRadius: 5
+            },
+            {
+              label: 'Call Resolution Rate',
+              data: resolution,
+              borderColor: '#10b981',
+              backgroundColor: 'rgba(16,185,129,0.15)',
+              tension: 0.35,
+              pointRadius: 4,
+              pointHoverRadius: 5
+            },
+            {
+              label: 'CSAT Score',
+              data: csat,
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245,158,11,0.15)',
+              tension: 0.35,
+              pointRadius: 4,
+              pointHoverRadius: 5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y}%`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false
+              }
+            },
+            y: {
+              beginAtZero: false,
+              min: 28,
+              max: 90,
+              grid: {
+                color: '#e5e7eb'
+              },
+              ticks: {
+                callback: (v) => `${v}`
+              }
+            }
+          }
+        }
+      });
+    })();
+
+    // Quality Cluster V2 Matrix + Critical Failure UI
+    (function() {
+      const matrixCellOrder = [
+        'positive-achieved-followed','neutral-achieved-followed','negative-achieved-followed',
+        'positive-not_achieved-followed','neutral-not_achieved-followed','negative-not_achieved-followed',
+        'positive-achieved-not_followed','neutral-achieved-not_followed','negative-achieved-not_followed',
+        'positive-not_achieved-not_followed','neutral-not_achieved-not_followed','negative-not_achieved-not_followed'
+      ];
+      const baseMatrix = {
+        'positive-achieved-followed': 18, 'neutral-achieved-followed': 8, 'negative-achieved-followed': 5,
+        'positive-not_achieved-followed': 6, 'neutral-not_achieved-followed': 7, 'negative-not_achieved-followed': 12,
+        'positive-achieved-not_followed': 15, 'neutral-achieved-not_followed': 6, 'negative-achieved-not_followed': 4,
+        'positive-not_achieved-not_followed': 2, 'neutral-not_achieved-not_followed': 3, 'negative-not_achieved-not_followed': 14
+      };
+      const poorMatrix = {
+        'positive-achieved-followed': 7, 'neutral-achieved-followed': 5, 'negative-achieved-followed': 6,
+        'positive-not_achieved-followed': 4, 'neutral-not_achieved-followed': 8, 'negative-not_achieved-followed': 14,
+        'positive-achieved-not_followed': 5, 'neutral-achieved-not_followed': 4, 'negative-achieved-not_followed': 7,
+        'positive-not_achieved-not_followed': 3, 'neutral-not_achieved-not_followed': 6, 'negative-not_achieved-not_followed': 31
+      };
+      const qualityScoreByKey = {
+        good: {
+          'positive-achieved-followed': 4.8, 'neutral-achieved-followed': 4.3, 'negative-achieved-followed': 3.6,
+          'positive-not_achieved-followed': 4.0, 'neutral-not_achieved-followed': 3.7, 'negative-not_achieved-followed': 3.2,
+          'positive-achieved-not_followed': 4.2, 'neutral-achieved-not_followed': 3.8, 'negative-achieved-not_followed': 3.4,
+          'positive-not_achieved-not_followed': 3.5, 'neutral-not_achieved-not_followed': 3.3, 'negative-not_achieved-not_followed': 2.9
+        },
+        poor: {
+          'positive-achieved-followed': 3.7, 'neutral-achieved-followed': 3.3, 'negative-achieved-followed': 2.9,
+          'positive-not_achieved-followed': 3.2, 'neutral-not_achieved-followed': 2.8, 'negative-not_achieved-followed': 2.4,
+          'positive-achieved-not_followed': 3.4, 'neutral-achieved-not_followed': 3.0, 'negative-achieved-not_followed': 2.6,
+          'positive-not_achieved-not_followed': 2.5, 'neutral-not_achieved-not_followed': 2.3, 'negative-not_achieved-not_followed': 2.0
+        }
+      };
+
+      function toMatrixBox(key, segment) {
+        const lowPerformer = segment === 'poor';
+        const score = qualityScoreByKey[segment][key];
+        return {
+          outcome_summary: lowPerformer
+            ? 'Lower behaviour quality reduced clarity and confidence, which weakened customer outcomes in this bucket.'
+            : 'Strong behaviour and call ownership improved customer confidence and consistency in this bucket.',
+          contact_context: {
+            contact_types: ['lid leak troubleshooting', 'handle stability concern'],
+            product_types: ['Stanley Quencher H2.0', 'Stanley Classic Bottle']
+          },
+          sampled_evidence: [
+            { call_id: `${segment.toUpperCase()}-1023`, timestamp: '00:04:12', speaker: 'Customer', verbatim: 'I need to know if this is fully fixed now.' },
+            { call_id: `${segment.toUpperCase()}-1088`, timestamp: '00:06:47', speaker: 'Agent', verbatim: 'I will confirm each step and what you should expect next.' },
+            { call_id: `${segment.toUpperCase()}-1154`, timestamp: '00:07:33', speaker: 'Customer', verbatim: lowPerformer ? 'This still feels unresolved to me.' : 'Thanks, that explanation was very clear.' }
+          ],
+          quality_scorecard: {
+            average_score: score,
+            alignment_analysis: lowPerformer
+              ? 'Low CSAT and low quality scores are broadly aligned; handling confidence and closure are the main gaps.'
+              : 'Higher CSAT generally aligns with higher quality scores; strongest results came from clear confirmation and ownership.'
+            ,
+            strengths: lowPerformer ? ['basic troubleshooting started'] : ['clear process walkthrough', 'explicit resolution confirmation'],
+            gaps: lowPerformer ? ['weak empathy handling', 'inconsistent next-step clarity'] : ['faster escalation for repeat issues']
+          },
+          improvement_opportunities: lowPerformer
+            ? ['Strengthen resolution confirmation language.', 'Improve expectation setting during unresolved scenarios.']
+            : ['Maintain SOP quality while reducing handle-time on repeat contacts.'],
+          recommended_actions: {
+            contact_centre_actions: lowPerformer
+              ? ['Coach on objection handling and reassurance.', 'Use mandatory closure prompts before call end.']
+              : ['Use this pattern as a calibration benchmark.'],
+            prevention_actions: lowPerformer
+              ? ['Improve self-service troubleshooting guidance.', 'Flag repeat contacts earlier in workflow.']
+              : ['Publish preventative care content for frequent lid concerns.']
+          }
+        };
+      }
+
+      const matrixPayload = {
+        good: Object.fromEntries(matrixCellOrder.map((k) => [k, { percentage: baseMatrix[k], box: toMatrixBox(k, 'good') }])),
+        poor: Object.fromEntries(matrixCellOrder.map((k) => [k, { percentage: poorMatrix[k], box: toMatrixBox(k, 'poor') }]))
+      };
+
+      const criticalFailurePayload = {
+        critical_failure_rate: 0.064,
+        critical_failure_summary: {
+          summary: 'Critical failures are concentrated in unresolved contacts where communication clarity and professionalism dropped.',
+          key_drivers: ['Unclear ownership in repeat-contact calls', 'Escalated tone in unresolved lid failures'],
+          category_breakdown: {
+            customer_distress: 14,
+            agent_misconduct: 4,
+            churn_threat: 9,
+            emotional_escalation: 12,
+            customer_helplessness: 8
+          }
+        },
+        critical_failure_evidence_list: [
+          { call_id: 'CF-2201', category: 'agent_misconduct', severity: 'high', timestamp: '00:09:12', speaker: 'Agent', verbatim: 'You already called, and we cannot keep repeating this process.' },
+          { call_id: 'CF-2174', category: 'customer_distress', severity: 'high', timestamp: '00:05:49', speaker: 'Customer', verbatim: 'I am done with this product. I want to cancel everything.' },
+          { call_id: 'CF-2142', category: 'emotional_escalation', severity: 'medium', timestamp: '00:06:08', speaker: 'Customer', verbatim: 'I have been trying all week and nobody is helping me.' },
+          { call_id: 'CF-2130', category: 'churn_threat', severity: 'medium', timestamp: '00:07:31', speaker: 'Customer', verbatim: 'If this is not solved now, I will stop buying Stanley products.' },
+          { call_id: 'CF-2121', category: 'customer_helplessness', severity: 'medium', timestamp: '00:04:57', speaker: 'Customer', verbatim: 'I have no idea what else to do at this point.' },
+          { call_id: 'CF-2110', category: 'customer_distress', severity: 'high', timestamp: '00:08:18', speaker: 'Customer', verbatim: 'This is unacceptable. Nobody has fixed this after multiple calls.' },
+          { call_id: 'CF-2097', category: 'emotional_escalation', severity: 'medium', timestamp: '00:03:42', speaker: 'Customer', verbatim: 'I am getting really upset now because this keeps happening.' },
+          { call_id: 'CF-2088', category: 'churn_threat', severity: 'high', timestamp: '00:09:44', speaker: 'Customer', verbatim: 'I am done with this brand if this is not resolved today.' }
+        ]
+      };
+      let showAllCriticalEvidence = false;
+
+      let currentSegment = 'good';
+      const totalWeeklyCalls = 1000;
+      const segmentSubtitle = document.getElementById('behaviourSubtitle');
+      const segmentButtons = document.querySelectorAll('.segment-btn');
+
+      function getScenarioKey(csat, resolution, process) {
+        return `${csat}-${resolution}-${process}`;
+      }
+
+      function renderList(items) {
+        return items && items.length ? `<ul>${items.map((v) => `<li>${v}</li>`).join('')}</ul>` : '<p class="empty-inline">No data</p>';
+      }
+
+      function renderEvidenceRows(rows) {
+        if (!rows || rows.length === 0) return '<p class="empty-inline">No data</p>';
+        return rows.map((r) => `
+          <div class="evidence-row">
+            <p><strong>${r.call_id}</strong> | ${r.timestamp} | ${r.speaker}</p>
+            <p>${r.verbatim}</p>
+          </div>
+        `).join('');
+      }
+
+      function updateMatrixPercentages() {
+        document.querySelectorAll('.matrix-cell[data-csat]').forEach((cell) => {
+          const key = getScenarioKey(cell.dataset.csat, cell.dataset.resolution, cell.dataset.process);
+          const payload = matrixPayload[currentSegment][key];
+          const percentage = payload.percentage;
+          const percentageElement = cell.querySelector('.cell-percentage');
+          if (percentageElement) percentageElement.textContent = `${percentage}%`;
+          let scoreElement = cell.querySelector('.cell-score');
+          if (!scoreElement) {
+            scoreElement = document.createElement('span');
+            scoreElement.className = 'cell-score';
+            cell.appendChild(scoreElement);
+          }
+          const score = payload.box.quality_scorecard.average_score;
+          const scoreClass = score >= 4 ? 'good' : score >= 3 ? 'neutral' : 'bad';
+          scoreElement.className = `cell-score ${scoreClass}`;
+          scoreElement.textContent = `QS ${score.toFixed(1)}`;
+        });
+      }
+      function renderRowLabels() {
+        document.querySelectorAll('.matrix-cell.row-label').forEach((labelCell) => {
+          const resolution = labelCell.dataset.resolution;
+          const process = labelCell.dataset.process;
+          const resolutionGood = resolution === 'achieved';
+          const processGood = process === 'followed';
+          const behaviourGood = currentSegment === 'good';
+          labelCell.innerHTML = `
+            <div class="row-label-stack">
+              <p><span class="state-icon ${resolutionGood ? 'ok' : 'bad'}">${resolutionGood ? '✓' : '✕'}</span> Resolution ${resolutionGood ? 'Achieved' : 'Not Achieved'}</p>
+              <p><span class="state-icon ${processGood ? 'ok' : 'bad'}">${processGood ? '✓' : '✕'}</span> Process ${processGood ? 'Followed' : 'Not Followed'}</p>
+              <p><span class="state-icon ${behaviourGood ? 'ok' : 'bad'}">${behaviourGood ? '✓' : '✕'}</span> ${behaviourGood ? 'Good Agent Behaviour' : 'Poor Agent Behaviour'}</p>
+            </div>
+          `;
+        });
+      }
+
+      function renderDiagnostic(csat, resolution, process) {
+        const key = getScenarioKey(csat, resolution, process);
+        const entry = matrixPayload[currentSegment][key];
+        if (!entry) return;
+        const percentageText = `${entry.percentage}%`;
+        const callsInBucket = Math.round((entry.percentage / 100) * totalWeeklyCalls);
+        const box = entry.box;
+
+        const csatLabel = csat === 'positive' ? 'Positive' : csat === 'neutral' ? 'Neutral' : 'Negative';
+        const resolutionLabel = resolution === 'achieved' ? 'Resolution Achieved' : 'Resolution Not Achieved';
+        const processLabel = process === 'followed' ? 'Process Followed' : 'Process Not Followed';
+
+        document.getElementById('modalTitle').textContent = `Diagnostic Insights: ${csatLabel} CSAT | ${resolutionLabel} | ${processLabel} (${currentSegment === 'good' ? 'Good Behaviour' : 'Poor Behaviour'})`;
+        document.getElementById('diagnosticSection').innerHTML = `
+          <div class="matrix-stats">
+            <div class="stat-item"><p class="stat-label">Percentage</p><p class="stat-value-large">${percentageText}</p></div>
+            <div class="stat-item"><p class="stat-label">Calls in Bucket</p><p class="stat-value-large">${callsInBucket.toLocaleString()}</p></div>
+            <div class="stat-item"><p class="stat-label">Total Weekly Calls</p><p class="stat-value-large">${totalWeeklyCalls.toLocaleString()}</p></div>
+          </div>
+          <div class="diagnostic-questions">
+            <div class="diagnostic-question"><h4>Outcome Summary</h4><div class="insight-block"><p>${box.outcome_summary}</p></div></div>
+            <div class="diagnostic-question"><h4>Contact Context</h4><div class="insight-block"><p><strong>Contact types</strong></p>${renderList(box.contact_context.contact_types)}<p><strong>Product types</strong></p>${renderList(box.contact_context.product_types)}</div></div>
+            <div class="diagnostic-question"><h4>Sampled Evidence</h4><div class="insight-block">${renderEvidenceRows(box.sampled_evidence)}</div></div>
+            <div class="diagnostic-question"><h4>Quality Scorecard</h4><div class="insight-block"><p><strong>Average score:</strong> ${box.quality_scorecard.average_score}</p><p><strong>Alignment analysis:</strong> ${box.quality_scorecard.alignment_analysis}</p><p class="block-title">Strengths</p>${renderList(box.quality_scorecard.strengths)}<p class="block-title">Gaps</p>${renderList(box.quality_scorecard.gaps)}</div></div>
+            <div class="diagnostic-question"><h4>Improvement Opportunities</h4><div class="insight-block">${renderList(box.improvement_opportunities)}</div></div>
+            <div class="diagnostic-question"><h4>Recommended Actions</h4><div class="insight-block"><p class="block-title">Contact-Centre Actions</p>${renderList(box.recommended_actions.contact_centre_actions)}<p class="block-title">Prevention Actions</p>${renderList(box.recommended_actions.prevention_actions)}</div></div>
+          </div>
+        `;
+        document.getElementById('diagnosticModal').style.display = 'flex';
+      }
+
+      function renderCriticalFailures() {
+        const totalCriticalFailures = criticalFailurePayload.critical_failure_evidence_list.length;
+        document.getElementById('criticalFailuresCount').textContent = String(totalCriticalFailures);
+        document.getElementById('criticalFailureSummaryText').textContent = criticalFailurePayload.critical_failure_summary.summary;
+        document.getElementById('criticalFailureDrivers').innerHTML = criticalFailurePayload.critical_failure_summary.key_drivers.map((d) => `<li>${d}</li>`).join('');
+        const categoryTotal = Object.values(criticalFailurePayload.critical_failure_summary.category_breakdown).reduce((sum, v) => sum + v, 0) || 1;
+        document.getElementById('criticalCategoryBreakdown').innerHTML = Object.entries(criticalFailurePayload.critical_failure_summary.category_breakdown)
+          .map(([k, v]) => {
+            const pct = Math.round((v / categoryTotal) * 100);
+            return `
+              <li class="category-item">
+                <div class="category-meta"><span class="category-name">${k.replace('_', ' ')}</span><strong>${v}</strong></div>
+                <div class="category-bar"><div class="category-fill" style="width:${pct}%"></div></div>
+              </li>
+            `;
+          }).join('');
+        const sortedEvidence = [...criticalFailurePayload.critical_failure_evidence_list]
+          .sort((a, b) => (a.severity === b.severity ? 0 : a.severity === 'high' ? -1 : 1));
+        const visibleEvidence = showAllCriticalEvidence ? sortedEvidence : sortedEvidence.slice(0, 5);
+        document.getElementById('criticalEvidenceRows').innerHTML = visibleEvidence.map((item) => `
+          <tr>
+            <td><span class="severity-chip ${item.severity}">${item.severity}</span></td>
+            <td>${item.category}</td>
+            <td>${item.call_id}</td>
+            <td>${item.timestamp}</td>
+            <td>${item.speaker}</td>
+            <td>${item.verbatim}</td>
+          </tr>
+        `).join('');
+        const btn = document.getElementById('toggleCriticalEvidenceBtn');
+        if (btn) {
+          btn.style.display = sortedEvidence.length > 5 ? 'inline-flex' : 'none';
+          btn.textContent = showAllCriticalEvidence ? 'Show top 5 critical failures' : 'Show all critical failures';
+        }
+      }
+
+      segmentButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          segmentButtons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentSegment = btn.dataset.segment;
+          segmentSubtitle.textContent = currentSegment === 'good'
+            ? 'Calls where agent behaviour scored 4-5.'
+            : 'Calls where agent behaviour scored 1-3.';
+          updateMatrixPercentages();
+          renderRowLabels();
+        });
+      });
+
+      document.querySelectorAll('.matrix-cell[data-csat]').forEach((cell) => {
+        cell.addEventListener('click', function() {
+          document.querySelectorAll('.matrix-cell').forEach((c) => c.classList.remove('active'));
+          this.classList.add('active');
+          renderDiagnostic(this.dataset.csat, this.dataset.resolution, this.dataset.process);
+        });
+      });
+
+      const modal = document.getElementById('diagnosticModal');
+      const closeBtn = document.getElementById('closeDiagnosticModal');
+      closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+      modal.addEventListener('click', function(e) { if (e.target === modal) modal.style.display = 'none'; });
+      const criticalFailuresCard = document.getElementById('criticalFailuresCard');
+      const criticalFailureModal = document.getElementById('criticalFailureModal');
+      const closeCriticalFailureModal = document.getElementById('closeCriticalFailureModal');
+      const toggleCriticalEvidenceBtn = document.getElementById('toggleCriticalEvidenceBtn');
+      criticalFailuresCard.addEventListener('click', function() {
+        criticalFailureModal.style.display = 'flex';
+      });
+      closeCriticalFailureModal.addEventListener('click', function() {
+        criticalFailureModal.style.display = 'none';
+      });
+      criticalFailureModal.addEventListener('click', function(e) {
+        if (e.target === criticalFailureModal) criticalFailureModal.style.display = 'none';
+      });
+      toggleCriticalEvidenceBtn.addEventListener('click', function() {
+        showAllCriticalEvidence = !showAllCriticalEvidence;
+        renderCriticalFailures();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'flex') modal.style.display = 'none';
+        if (e.key === 'Escape' && criticalFailureModal.style.display === 'flex') criticalFailureModal.style.display = 'none';
+      });
+
+      updateMatrixPercentages();
+      renderRowLabels();
+      renderCriticalFailures();
+    })();
+  </script>
+</body>
+</html>
+
